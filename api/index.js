@@ -10,6 +10,8 @@ const User = require('./models/User');
 const Post = require('./models/Post'); // You need a Post model
 const app = express();
 
+const port=process.env.PORT || 4000;
+
 const salt = bcrypt.genSaltSync(10);
 const jwtSecret = 'your_jwt_secret_key';
 
@@ -195,6 +197,6 @@ app.get('/post/:id', async (req, res) => {
 
 
 
-app.listen(4000, () => {
+app.listen(port, () => {
   console.log('Server is running on port 4000');
 });

@@ -6,7 +6,7 @@ export default function Header() {
   const {setuserinfo,userinfo} = useContext(UserContext);
   
   useEffect(() => {
-  fetch(`${process.env.REACT_APP_API_URL}/profile`, {
+  fetch('http://localhost:4000/profile', {
     credentials: 'include',
   })
     .then((response) => response.json())
@@ -16,7 +16,7 @@ export default function Header() {
 }, []);
 
 function logout() {
-  fetch(`${process.env.REACT_APP_API_URL}/logout`, {
+  fetch('http://localhost:4000/logout', {
     credentials: 'include',
     method: 'POST',
   }).then(() => setuserinfo(null));

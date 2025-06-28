@@ -12,7 +12,7 @@ const Login = () => {
   async function login(e) {
     e.preventDefault();
 
-    const response = await fetch(`${BASE_URL}/login`, {
+    const response = await fetch('http://localhost:4000/login', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: { 'Content-Type': 'application/json' },

@@ -9,7 +9,7 @@ function Postpage({ _id, title, summary, cover, content, createdAt, author }) {
     <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg overflow-hidden mb-6">
       <Link to={`/post/${_id}`}>
         <img
-          src={`${backendUrl}/${cover}`}
+          src={'http://localhost:4000/'+cover}
           alt="cover"
           className="w-full h-64 object-cover"
         />

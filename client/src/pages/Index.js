@@ -7,7 +7,7 @@ const Index = () => {
   const [posts,setposts]=useState([]);
   
   useEffect(()=>{
-    fetch(`${process.env.REACT_APP_API_URL}/post`).then(response=>{
+    fetch('http://localhost:4000/post').then(response=>{
       response.json().then(posts=>{
         setposts(posts);
       })

@@ -11,7 +11,7 @@ export default function Editpost() {
   const [redirect,setRedirect] = useState(false);
   const BASE_URL = process.env.REACT_APP_API_URL;
   useEffect(() => {
-    fetch(`${BASE_URL}/post`+id)
+    fetch('http://localhost:4000/post'+id)
       .then(response => {
         response.json().then(postInfo => {
           setTitle(postInfo.title);
@@ -35,7 +35,7 @@ export default function Editpost() {
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/post1`, {
+    const response = await fetch('http://localhost:4000/post1', {
       method: 'POST',
       body: data,
       credentials: 'include',
