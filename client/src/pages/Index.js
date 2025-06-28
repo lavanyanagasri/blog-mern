@@ -5,8 +5,9 @@ import Postpage from './Postpage';
 
 const Index = () => {
   const [posts,setposts]=useState([]);
+  
   useEffect(()=>{
-    fetch('http://localhost:4000/post').then(response=>{
+    fetch(`${process.env.REACT_APP_API_URL}/post`).then(response=>{
       response.json().then(posts=>{
         setposts(posts);
       })

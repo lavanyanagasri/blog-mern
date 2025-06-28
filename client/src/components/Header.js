@@ -4,22 +4,22 @@ import { UserContext } from "../UserContext";
 
 export default function Header() {
   const {setuserinfo,userinfo} = useContext(UserContext);
-  useEffect(()=>{
-     fetch('http://localhost:4000/profile',{
-       credentials:'include',
+  
+  useEffect(() => {
+  fetch(`${process.env.REACT_APP_API_URL}/profile`, {
+    credentials: 'include',
+  })
+    .then((response) => response.json())
+    .then((userinfo) => {
+      setuserinfo(userinfo);
+    });
+}, []);
 
-     }).then((response=>{
-        response.json().then(userinfo=>{
-          setuserinfo(userinfo);
-        })
-     }))
-  },[]);
-
-  function logout() {
-  fetch('http://localhost:4000/logout', {
+function logout() {
+  fetch(`${process.env.REACT_APP_API_URL}/logout`, {
     credentials: 'include',
     method: 'POST',
-  }).then(() => setuserinfo(null)); 
+  }).then(() => setuserinfo(null));
 }
 
 const username=userinfo?.username;

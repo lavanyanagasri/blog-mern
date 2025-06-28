@@ -17,7 +17,7 @@ const jwtSecret = 'your_jwt_secret_key';
 const uploadMiddleware = multer({ dest: 'uploads/' });
 
 const corsOptions = {
-  origin: ['http://localhost:3000','https://mern-blog-app-inky.vercel.app/'],
+  origin:'http://localhost:3000',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
