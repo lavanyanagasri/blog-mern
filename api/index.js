@@ -10,6 +10,16 @@ const User = require('./models/User');
 const Post = require('./models/Post'); // You need a Post model
 const app = express();
 
+const path = require("path");
+
+// Serve frontend build
+app.use(express.static(path.join(__dirname, "client/build"))); // adjust path if needed
+
+// Catch-all route for React Router
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+
 const port=process.env.PORT || 4000;
 
 const salt = bcrypt.genSaltSync(10);
