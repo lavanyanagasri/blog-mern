@@ -23,7 +23,7 @@ const uploadMiddleware = multer({ dest: 'uploads/' });
 
 // ✅ CORS for frontend access
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://blog-mern-frontend-ugia.onrender.com'],
+  origin: ['http://localhost:3000', 'https://blog-mern-eight.vercel.app/'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
