@@ -12,7 +12,7 @@ const Login = () => {
   async function login(e) {
     e.preventDefault();
 
-    const response = await fetch('http://localhost:4000/login', {
+    const response = await fetch('https://blog-mern-backend-zdm1.onrender.com/login', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: { 'Content-Type': 'application/json' },
