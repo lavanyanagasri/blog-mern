@@ -19,7 +19,7 @@ const jwtSecret = 'your_jwt_secret_key';
 const uploadMiddleware = multer({ dest: 'uploads/' });
 
 const corsOptions = {
-  origin:'http://localhost:3000',
+  origin:['http://localhost:3000', 'https://blog-mern-frontend-ugia.onrender.com'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
