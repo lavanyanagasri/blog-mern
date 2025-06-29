@@ -8,7 +8,7 @@ const Register = () => {
   async function register(e) {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/register', {
+      const response = await fetch('https://blog-mern-backend-zdm1.onrender.com/register', {
         method: 'POST',
         body: JSON.stringify({ username, password }),
         headers: { 'Content-Type': 'application/json' },
