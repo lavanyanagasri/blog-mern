@@ -9,7 +9,7 @@ export default function Post() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:4000/post/${id}`)
+    fetch(`https://blog-mern-backend-zdm1.onrender.com/post/${id}`)
       .then((response) => {
         if (!response.ok) throw new Error("Post not found");
         return response.json();
@@ -63,7 +63,7 @@ export default function Post() {
       <div className="mb-6">
         <img
           className="w-full rounded-lg object-cover"
-          src={`http://localhost:4000/${postInfo.cover}`}
+          src={`https://blog-mern-backend-zdm1.onrender.com/${postInfo.cover}`}
           alt="Post Cover"
         />
       </div>
