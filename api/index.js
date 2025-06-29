@@ -6,47 +6,44 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const fs = require('fs');
-const User = require('./models/User');
-const Post = require('./models/Post'); // You need a Post model
-const app = express();
-
 const path = require("path");
 
-// Serve frontend build
-app.use(express.static(path.join(__dirname, "client/build"))); // adjust path if needed
+const User = require('./models/User');
+const Post = require('./models/Post');
 
-// Catch-all route for React Router
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
-});
+const app = express();
+const port = process.env.PORT || 4000;
 
-const port=process.env.PORT || 4000;
-
-const salt = bcrypt.genSaltSync(10);
+// JWT secret (move to .env in real projects)
 const jwtSecret = 'your_jwt_secret_key';
+const salt = bcrypt.genSaltSync(10);
 
-// Multer setup for file uploads
+// ✅ Multer for file uploads
 const uploadMiddleware = multer({ dest: 'uploads/' });
 
+// ✅ CORS for frontend access
 const corsOptions = {
-  origin:['http://localhost:3000', 'https://blog-mern-frontend-ugia.onrender.com'],
+  origin: ['http://localhost:3000', 'https://blog-mern-frontend-ugia.onrender.com'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-app.use(cors(corsOptions)); 
-
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-app.use('/uploads', express.static(__dirname + '/uploads')); // serve static files
+
+// ✅ Serve uploaded images
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 // ✅ Connect to MongoDB
 mongoose.connect('mongodb+srv://lavanyanagasri:lavanyanagasri@cluster1.pp2m8.mongodb.net/blogApp?retryWrites=true&w=majority&appName=Cluster1')
   .then(() => console.log('MongoDB connected!'))
   .catch((e) => console.error('MongoDB connection error:', e));
 
-// ✅ Register route
+// ================== API Routes ===================
+
+// Register
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -60,7 +57,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
-// ✅ Login route
+// Login
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -71,7 +68,6 @@ app.post('/login', async (req, res) => {
     if (!isPasswordCorrect) return res.status(401).json({ message: 'Wrong credentials' });
 
     const token = jwt.sign({ id: userDoc._id, username }, jwtSecret, {});
-
     res.cookie('token', token, {
       httpOnly: true,
       sameSite: 'lax',
@@ -81,24 +77,23 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// ✅ Profile route
+// Profile
 app.get('/profile', (req, res) => {
   const { token } = req.cookies;
   if (!token) return res.status(401).json({ message: 'No token' });
 
   jwt.verify(token, jwtSecret, {}, (err, info) => {
     if (err) return res.status(403).json({ message: 'Invalid token' });
-
     res.json(info);
   });
 });
 
-// ✅ Logout route
+// Logout
 app.post('/logout', (req, res) => {
   res.cookie('token', '', { httpOnly: true }).json('ok');
 });
 
-// ✅ Create Post route
+// Create Post
 app.post('/post', uploadMiddleware.single('file'), (req, res) => {
   const { token } = req.cookies;
   if (!token) return res.status(401).json({ message: 'Unauthorized' });
@@ -107,10 +102,10 @@ app.post('/post', uploadMiddleware.single('file'), (req, res) => {
     if (err) return res.status(403).json({ message: 'Invalid token' });
 
     const { title, summary, content } = req.body;
-    const { originalname, path } = req.file;
+    const { originalname, path: tempPath } = req.file;
     const ext = originalname.split('.').pop();
-    const newPath = `${path}.${ext}`;
-    fs.renameSync(path, newPath);
+    const newPath = `${tempPath}.${ext}`;
+    fs.renameSync(tempPath, newPath);
 
     try {
       const postDoc = await Post.create({
@@ -127,14 +122,15 @@ app.post('/post', uploadMiddleware.single('file'), (req, res) => {
   });
 });
 
+// Update Post
 app.post('/post1', uploadMiddleware.single('file'), async (req, res) => {
   let newPath = null;
 
   if (req.file) {
-    const { originalname, path } = req.file;
+    const { originalname, path: tempPath } = req.file;
     const ext = originalname.split('.').pop();
-    newPath = `${path}.${ext}`;
-    fs.renameSync(path, newPath);
+    newPath = `${tempPath}.${ext}`;
+    fs.renameSync(tempPath, newPath);
   }
 
   const { token } = req.cookies;
@@ -144,15 +140,8 @@ app.post('/post1', uploadMiddleware.single('file'), async (req, res) => {
     if (err) return res.status(403).json({ message: 'Token invalid', error: err.message });
 
     const { id, title, summary, content } = req.body;
-    let postDoc;
-
-    try {
-      postDoc = await Post.findById(id);
-      if (!postDoc) return res.status(404).json({ message: 'Post not found' });
-    } catch (err) {
-      return res.status(400).json({ message: 'Invalid post ID', error: err.message });
-    }
-
+    const postDoc = await Post.findById(id);
+    if (!postDoc) return res.status(404).json({ message: 'Post not found' });
     if (postDoc.author.toString() !== info.id) {
       return res.status(403).json({ message: 'You are not the author of this post' });
     }
@@ -171,42 +160,38 @@ app.post('/post1', uploadMiddleware.single('file'), async (req, res) => {
   });
 });
 
-
-
-//get route of post
+// Get all posts
 app.get('/post', async (req, res) => {
   const posts = await Post.find()
-    .populate('author', ['username']) 
+    .populate('author', ['username'])
     .sort({ createdAt: -1 })
-    .limit(20);        
+    .limit(20);
   res.json(posts);
 });
 
-//post id route
+// Get single post by ID
 app.get('/post/:id', async (req, res) => {
   const { id } = req.params;
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: 'Invalid post ID format' });
   }
 
   try {
     const postDoc = await Post.findById(id).populate('author', ['username']);
-
-    if (!postDoc) {
-      return res.status(404).json({ message: 'Post not found' });
-    }
-
+    if (!postDoc) return res.status(404).json({ message: 'Post not found' });
     res.json(postDoc);
   } catch (e) {
     res.status(500).json({ message: 'Error fetching post', error: e.message });
   }
 });
 
+// ✅ Serve frontend React app **after all routes**
+app.use(express.static(path.join(__dirname, "client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
-
-
-
+// Start server
 app.listen(port, () => {
-  console.log('Server is running on port 4000');
+  console.log('Server is running on port', port);
 });
