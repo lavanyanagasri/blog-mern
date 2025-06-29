@@ -11,7 +11,7 @@ export default function Editpost() {
   const [redirect,setRedirect] = useState(false);
   const BASE_URL = process.env.REACT_APP_API_URL;
   useEffect(() => {
-    fetch('http://localhost:4000/post'+id)
+    fetch('https://blog-mern-backend-zdm1.onrender.com/post'+id)
       .then(response => {
         response.json().then(postInfo => {
           setTitle(postInfo.title);
@@ -35,7 +35,7 @@ export default function Editpost() {
   }
 
   try {
-    const response = await fetch('http://localhost:4000/post1', {
+    const response = await fetch('https://blog-mern-backend-zdm1.onrender.com/post1', {
       method: 'POST',
       body: data,
       credentials: 'include',
