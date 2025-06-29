@@ -6,7 +6,7 @@ export default function Header() {
   const {setuserinfo,userinfo} = useContext(UserContext);
   
   useEffect(() => {
-  fetch('http://localhost:4000/profile', {
+  fetch('https://blog-mern-backend-zdm1.onrender.com/profile', {
     credentials: 'include',
   })
     .then((response) => response.json())
@@ -16,7 +16,7 @@ export default function Header() {
 }, []);
 
 function logout() {
-  fetch('http://localhost:4000/logout', {
+  fetch('https://blog-mern-backend-zdm1.onrender.com/logout', {
     credentials: 'include',
     method: 'POST',
   }).then(() => setuserinfo(null));
