@@ -7,7 +7,7 @@ const Index = () => {
   const [posts,setposts]=useState([]);
   
   useEffect(()=>{
-    fetch('http://localhost:4000/post').then(response=>{
+    fetch('https://blog-mern-backend-zdm1.onrender.com/post').then(response=>{
       response.json().then(posts=>{
         setposts(posts);
       })
