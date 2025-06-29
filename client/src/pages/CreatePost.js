@@ -19,7 +19,7 @@ export default function Createpost() {
     data.set('content', content);
     data.set('file', files[0]);
 
-    const response = await fetch('http://localhost:4000/post', {
+    const response = await fetch('https://blog-mern-backend-zdm1.onrender.com/post', {
       method: 'POST',
       body: data,
       credentials: 'include',
