@@ -73,7 +73,8 @@ app.post('/login', async (req, res) => {
     const token = jwt.sign({ id: userDoc._id, username }, jwtSecret, {});
     res.cookie('token', token, {
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: 'None',  // ✅ must be 'None' to allow cross-site cookie
+      secure: true,
     }).json({ id: userDoc._id, username });
   } catch (e) {
     res.status(500).json({ message: 'Login failed', error: e.message });
