@@ -23,13 +23,16 @@ const uploadMiddleware = multer({ dest: 'uploads/' });
 
 // ✅ CORS for frontend access
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://blog-mern-eight.vercel.app/'],
+  origin: [
+    "http://localhost:3000",
+    "https://blog-mern-m50nxqjeo-lavanya-s-projects-05b814d8.vercel.app" // ✅ add this exact domain
+  ],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
-
 app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 
