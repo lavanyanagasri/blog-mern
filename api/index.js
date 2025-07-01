@@ -25,7 +25,7 @@ const uploadMiddleware = multer({ dest: 'uploads/' });
 const corsOptions = {
   origin: [
     "http://localhost:3000",
-    "https://blog-mern-m50nxqjeo-lavanya-s-projects-05b814d8.vercel.app" // ✅ add this exact domain
+    "https://blog-mern-4pfjtfcsn-lavanya-s-projects-05b814d8.vercel.app" // ✅ add this exact domain
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
