@@ -3,11 +3,11 @@ import { formatISO9075 } from 'date-fns';
 import { Link } from 'react-router-dom';
 
 function Postpage({ _id, title, summary, cover, content, createdAt, author }) {
-  // Use proper env variable name (REACT_APP_ for Create React App, VITE_ for Vite)
   const backendUrl = process.env.REACT_APP_API_URL;
 
-  // Ensure URL is valid even if cover already includes a path like "uploads/image.jpg"
-  const imageUrl = cover ? new URL(cover, backendUrl).toString() : '';
+  const imageUrl = cover?.startsWith('http')
+    ? cover
+    : `${backendUrl.replace(/\/$/, '')}/${cover?.replace(/^\/+/, '')}`;
 
   return (
     <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg overflow-hidden mb-6">
