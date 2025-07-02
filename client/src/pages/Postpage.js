@@ -13,6 +13,7 @@ function Postpage({ _id, title, summary, cover, content, createdAt, author }) {
     <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg overflow-hidden mb-6">
       <Link to={`/post/${_id}`}>
         {imageUrl && (
+          console.log("Image URL:", imageUrl);
           <img
             src={imageUrl}
             alt="cover"
