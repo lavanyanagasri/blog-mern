@@ -3,16 +3,22 @@ import { formatISO9075 } from 'date-fns';
 import { Link } from 'react-router-dom';
 
 function Postpage({ _id, title, summary, cover, content, createdAt, author }) {
+  // Use proper env variable name (REACT_APP_ for Create React App, VITE_ for Vite)
   const backendUrl = process.env.REACT_APP_API_URL;
+
+  // Ensure URL is valid even if cover already includes a path like "uploads/image.jpg"
+  const imageUrl = cover ? new URL(cover, backendUrl).toString() : '';
 
   return (
     <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg overflow-hidden mb-6">
       <Link to={`/post/${_id}`}>
-        <img
-          src={`${backendUrl}/${cover}`}  // ✅ now using env variable correctly
-          alt="cover"
-          className="w-full h-64 object-cover"
-        />
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt="cover"
+            className="w-full h-64 object-cover"
+          />
+        )}
       </Link>
       <div className="p-4">
         <Link to={`/post/${_id}`}>
