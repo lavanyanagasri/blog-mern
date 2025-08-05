@@ -54,7 +54,7 @@ npm start
 ```
 ##  Frontend Setup
 ```bash
-cd Frintend
+cd Frontend
 npm install
 npm run dev
 ```
