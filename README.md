@@ -14,15 +14,6 @@ A full-stack blogging platform built using the **MERN** stack (MongoDB, Express.
 - 🔍 Responsive UI using **Tailwind CSS**
 - 🧠 Skeleton loading UI
 - 🔐 AuthContext for global authentication state
-
-## 📸 Screenshots
-
-| Home | Add Story | Profile |
-|------|-----------|---------|
-| ![Home](screenshots/home.png) | ![Add Story](screenshots/addstory.png) | ![Profile](screenshots/profile.png) |
-
-> *(Add your screenshots inside a `screenshots/` folder for better presentation)*
-
 ---
 
 ## 🧰 Tech Stack
@@ -45,3 +36,55 @@ A full-stack blogging platform built using the **MERN** stack (MongoDB, Express.
 ```bash
 git clone https://github.com/<your-username>/blog-mern.git
 cd blog-mern
+```
+## ⚙️ Backend Setup
+```bash
+cd Backend
+npm install
+```
+## Create .env file in backend/ folder:
+```bash
+PORT=5000
+MONGO_URI=your_mongo_uri_here
+JWT_SECRET=your_jwt_secret_here
+```
+## Start the backend server:
+```bash
+npm start
+```
+##  Frontend Setup
+```bash
+cd Frintend
+npm install
+npm run dev
+```
+## Folder Structure
+```bash
+mern-blog/
+│
+├── Backend/
+│   ├── models/
+│   ├── routes/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── helpers/
+│   └── server.js
+│
+├── Frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── context/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+```
+## 🚀 Deployment
+Frontend: Vercel / Netlify
+
+Backend: Render / Railway
+
+Database: MongoDB Atlas
+
+## 🙌 Contributing
+Contributions are welcome! Feel free to fork the repository and submit a pull request.
