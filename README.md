@@ -30,8 +30,11 @@ A full-stack blogging platform built using the **MERN** stack (MongoDB, Express.
 ---
 ## Screenshots of My Project
 <img width="1898" height="886" alt="image" src="https://github.com/user-attachments/assets/b7e42482-38e5-484d-bd68-06dcc9876a40" />
+
 <img width="1899" height="892" alt="image" src="https://github.com/user-attachments/assets/f1a69213-adea-4463-9833-b88e41c5427d" />
+
 <img width="1903" height="914" alt="image" src="https://github.com/user-attachments/assets/0d54e05a-5a43-48ef-b407-e00a009432f6" />
+
 <img width="1895" height="920" alt="image" src="https://github.com/user-attachments/assets/52bb16a2-db58-40f8-bddc-ddbb912d3f42" />
 
 ## 🚀 Getting Started
