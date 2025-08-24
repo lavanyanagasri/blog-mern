@@ -1,0 +1,22 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(10, 20px);
+  grid-gap: 4px;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto;
+  max-width: 250px;
+}
+
+.grid-item {
+  width: 20px;
+  height: 20px;
+  background-color: #222;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 3px;
+}
+
+.grid-item.active {
+  background-color: #00ffcc;
+  box-shadow: 0 0 10px #00ffcc;
+}
